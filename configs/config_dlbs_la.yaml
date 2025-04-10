@@ -1,5 +1,5 @@
 # path:
-save_img_path: "./results_sampling/beam/devil_high/gemini_corr_weight/"
+save_img_path: "./results_sampling/"
 pretrained_model_path: "maxin-cn/Latte-1"
 
 # model config: 

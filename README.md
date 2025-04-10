@@ -5,8 +5,9 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2501.19252-b31b1b.svg)](https://arxiv.org/abs/2501.19252)
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
 
-<img src="images/Presentation4.gif" width="400">
-<img src="images/figure1.png" alt="Image1" width="600" />
+<!-- <img src="images/Presentation4.gif" width="400"> -->
+<img src="images/search_qualitative-1.png" alt="Image1" width="600" />
+<img src="images/figure1.png" alt="Image2" width="600" />
 
 ## Settings
 ### Download Python Libraries

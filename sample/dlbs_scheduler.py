@@ -1,3 +1,4 @@
+from diffusers.schedulers import DDIMScheduler
 from diffusers.schedulers.scheduling_ddim import DDIMSchedulerOutput
 from diffusers.utils import BaseOutput
 from diffusers.utils.torch_utils import randn_tensor
