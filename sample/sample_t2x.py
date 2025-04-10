@@ -51,68 +51,68 @@ def main(args):
                                                   beta_schedule=args.beta_schedule,
                                                   variance_type=args.variance_type,
                                                   clip_sample=False)
-
-
-    if args.sample_method == 'DLBS':
+        
         videogen_pipeline = DLBSLattePipeline(vae=vae, 
                                  text_encoder=text_encoder, 
                                  tokenizer=tokenizer, 
                                  scheduler=scheduler, 
                                  transformer=transformer_model).to(device)
+        
+    else:
+        raise NotImplementedError()
 
 
     if not os.path.exists(args.save_img_path):
         os.makedirs(args.save_img_path, exist_ok=True)
 
-    if args.sample_method == 'Free2Guide':
-        # Reward calculator
-        compute_video_reward = VideoRewardCalculator(
-            device=args.device_r, 
-            w_subject_consistency=args.weights_list[0],
-            w_motion_smoothness=args.weights_list[1],
-            w_dynamic_degree=args.weights_list[2],
-            w_aesthetic=args.weights_list[3],
-            w_overall_consistency=args.weights_list[4],
-        )
+    # Reward calculator
+    compute_video_reward = VideoRewardCalculator(
+        device=args.device_r, 
+        w_subject_consistency=args.weights_list[0],
+        w_motion_smoothness=args.weights_list[1],
+        w_dynamic_degree=args.weights_list[2],
+        w_aesthetic=args.weights_list[3],
+        w_overall_consistency=args.weights_list[4],
+    )
+    
+    for num_prompt, prompt in enumerate(args.text_prompt):
+        print('Processing the ({}) prompt'.format(prompt))
         
-        for num_prompt, prompt in enumerate(args.text_prompt):
-            print('Processing the ({}) prompt'.format(prompt))
+        if not os.path.exists(args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/'):
+            os.makedirs(args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/', exist_ok=True)
+
+        if os.path.exists(f'{args.save_img_path}/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/{prompt}_log.txt'):
+            raise ValueError(f'File {args.save_img_path}/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/{prompt}_log.txt already exists')
             
-            if not os.path.exists(args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/'):
-                os.makedirs(args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/', exist_ok=True)
+        videos = videogen_pipeline(prompt, 
+                                video_length=args.video_length, 
+                                height=args.image_size[0], 
+                                width=args.image_size[1], 
+                                num_inference_steps=args.num_sampling_steps,
+                                guidance_scale=args.guidance_scale,
+                                enable_temporal_attentions=args.enable_temporal_attentions,
+                                num_images_per_prompt=1,
+                                mask_feature=True,
+                                enable_vae_temporal_decoder=args.enable_vae_temporal_decoder,
+                                eta=args.ddim_eta,
+                                num_beams=args.num_beams,
+                                num_candidates=args.num_candidates,
+                                num_lookahead_steps=args.num_lookahead_steps,
+                                reward_model=compute_video_reward,
+                                logging_file=f'{args.save_img_path}/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/{prompt}_log.txt'
+                                ).video
 
-            if os.path.exists(f'{args.save_img_path}/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/{prompt}_log.txt'):
-                raise ValueError(f'File {args.save_img_path}/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/{prompt}_log.txt already exists')
-                
-            videos = videogen_pipeline(prompt, 
-                                    video_length=args.video_length, 
-                                    height=args.image_size[0], 
-                                    width=args.image_size[1], 
-                                    num_inference_steps=args.num_sampling_steps,
-                                    guidance_scale=args.guidance_scale,
-                                    enable_temporal_attentions=args.enable_temporal_attentions,
-                                    num_images_per_prompt=1,
-                                    mask_feature=True,
-                                    enable_vae_temporal_decoder=args.enable_vae_temporal_decoder,
-                                    eta=args.ddim_eta,
-                                    num_beams=args.num_beams,
-                                    num_candidates=args.num_candidates,
-                                    num_lookahead_steps=args.num_lookahead_steps,
-                                    reward_model=compute_video_reward,
-                                    logging_file=f'{args.save_img_path}/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/{prompt}_log.txt'
-                                    ).video
-
-            if videos.shape[1] == 1:
-                try:
-                    save_image(videos[0][0], args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/' + prompt + '.png')
-                except:
-                    # save_image(videos[0][0], args.save_img_path + str(num_prompt)+ '.png')
-                    print('Error when saving {}'.format(prompt))
-            else:
-                try:
-                    imageio.mimwrite(args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/' + prompt + '.mp4', videos[0], fps=8, quality=9) # highest quality is 10, lowest is 0
-                except:
-                    print('Error when saving {}'.format(prompt))
+        if videos.shape[1] == 1:
+            try:
+                save_image(videos[0][0], args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/' + prompt + '.png')
+            except:
+                # save_image(videos[0][0], args.save_img_path + str(num_prompt)+ '.png')
+                print('Error when saving {}'.format(prompt))
+        else:
+            try:
+                imageio.mimwrite(args.save_img_path + f'/LA={args.num_lookahead_steps}_K={args.num_candidates}_B={args.num_beams}/' + prompt + '.mp4', videos[0], fps=8, quality=9) # highest quality is 10, lowest is 0
+            except:
+                print('Error when saving {}'.format(prompt))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -6,8 +6,13 @@
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
-<img src="images/search_qualitative-1.png" alt="Image1" width="600" />
-<img src="images/figure1.png" alt="Image2" width="600" />
+<p align="center">
+    <img src="images/search_qualitative-1.png" alt="Image1" width="600" />
+</p>
+
+<p align="center">
+    <img src="images/figure1.png" alt="Image2" width="600" />
+</p>
 
 ## Settings
 ### Download Python Libraries
