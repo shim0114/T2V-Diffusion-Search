@@ -7,16 +7,16 @@
 
 <img src="images/figure1.png" alt="Image1" width="600" />
 
-### Settings
-#### Download Python Libraries
+## Settings
+### Download Python Libraries
 Please use `./Dockerfile` to build docker image or install python libraries specified in this dockerfile.
 
-#### Download Weights
+### Download Weights
 ```
 bash download_weight.sh
 ```
 
-### Run Inference
+## Run Inference
 ```
 # DLBS
 python3 sample/sample_t2x.py --config configs/config_dlbs.yaml
@@ -24,7 +24,7 @@ python3 sample/sample_t2x.py --config configs/config_dlbs.yaml
 python3 sample/sample_t2x.py --config configs/config_dlbs_la.yaml
 ```
 
-### Citation
+## Citation
 
 ```bibtex
 @article{oshima2025inference,
@@ -36,7 +36,7 @@ python3 sample/sample_t2x.py --config configs/config_dlbs_la.yaml
 }
 ```
 
-### Acknowledgement
+## Acknowledgement
 
 We sincerely thank those who have open-sourced their works including, but not limited to, the repositories below:
 
