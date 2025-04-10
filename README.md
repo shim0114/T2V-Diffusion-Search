@@ -5,4 +5,4 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2501.19252-b31b1b.svg)](https://arxiv.org/abs/2501.19252)
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
 
-<img src="images/figure1.png" alt="Image1" width="300" />
+<img src="images/figure1.png" alt="Image1" width="600" />
