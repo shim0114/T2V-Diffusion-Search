@@ -7,7 +7,7 @@
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
 <p align="center">
-    <img src="images/search_qualitative-1.png" alt="Image1" width="600" />
+    <img src="images/search_qualitative-1.png" alt="Image1" width="800" />
 </p>
 
 <p align="center">
