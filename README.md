@@ -11,9 +11,20 @@
 </p>
 
 ## How to Work
-Diffusion latent beam search (DLBS) seeks a better diffusion path over the reverse process; sampling K latents per beam and possessing B beams for the next step, which mitigates the effect from inaccurate argmax. Lookahead estimator notably reduces the noise at latent reward evaluation by interpolating the rest of the time steps from the current latent with deterministic DDIM.
+Diffusion latent beam search (DLBS) seeks a better diffusion path over the reverse process; sampling K latents per beam and possessing B beams for the next step, which mitigates the effect from inaccurate argmax.
+Lookahead estimator notably reduces the noise at latent reward evaluation by interpolating the rest of the time steps from the current latent with deterministic DDIM.
 <p align="center">
     <img src="images/figure1.png" alt="Image2" width="600" />
+</p>
+
+## Trade-off between Generation Compute and Alignment
+Diffusion Latent Beam Search (DLBS) achieves more efficient performance gains compared to Best-of-N (BoN) and Greedy Search (GS) in terms of execution time.
+Furthermore, employing our Lookahead Estimator further accentuates these benefits.
+<p align="center">
+    <img src="images/scaling_v2-1.png" alt="Image3" width="600" />
+</p>
+<p align="center">
+    <img src="images/reward_cost-1.png" alt="Image4" width="600" />
 </p>
 
 ## Settings
