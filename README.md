@@ -11,7 +11,7 @@
 </p>
 
 ## How to Work
-Diffusion latent beam search (DLBS) seeks a better diffusion path over the reverse process; sampling K latents per beam and possessing B beams for the next step, which mitigates the effect from inaccurate argmax. Lookahead estimator notably reduces the noise at latent reward evaluation by interpolating the rest of the time steps from the current latent with deterministic DDIM.
+**Diffusion latent beam search (DLBS)** seeks a better diffusion path over the reverse process; sampling K latents per beam and possessing B beams for the next step, which mitigates the effect from inaccurate argmax. **Lookahead estimator** notably reduces the noise at latent reward evaluation by interpolating the rest of the time steps from the current latent with deterministic DDIM.
 <p align="center">
     <img src="images/figure1.png" alt="Image2" width="600" />
 </p>
@@ -19,14 +19,16 @@ Diffusion latent beam search (DLBS) seeks a better diffusion path over the rever
 ## Trade-off between Generation Compute and Alignment
 Comparison among diffusion latent beam search (DLBS), best-of-N (BoN) and greedy search (GS).
 We measure the performance in terms of a combinational reward calibrated to Gemini (above) and GPT-4o (below).
-DLBS improves all the calibrated reward the best as the search budget $KB$ increases (especially $KB=16,32$) while BoN and GS in some cases eventually slows down or saturates the performance.
-Notably, LA estimator ($T'=6$, $KB=8$) is comparable to or even outperforming DLBS.
+**DLBS** improves all the calibrated reward the best as the search budget $KB$ increases (especially $KB=16,32$) while BoN and GS in some cases eventually slows down or saturates the performance.
+Notably, **LA estimator** ($T'=6$, $KB=8$) is comparable to or even outperforming DLBS ($KB=32$).
 
 <p align="center">
     <img src="images/scaling_v2-1.png" alt="Image3" width="600" />
 </p>
-Diffusion Latent Beam Search (DLBS) achieves more efficient performance gains compared to Best-of-N (BoN) and Greedy Search (GS) in terms of execution time.
-Furthermore, employing our Lookahead Estimator further accentuates these benefits, demonstrating that slight additional computational overhead realizes the improved alignment performance much more efficiently than with BoN or GS.
+
+**Diffusion Latent Beam Search (DLBS)** achieves more efficient performance gains compared to Best-of-N (BoN) and Greedy Search (GS) in terms of execution time.
+Furthermore, employing our **Lookahead Estimator** further accentuates these benefits, demonstrating that **slight additional computational overhead** realizes the improved alignment performance much more efficiently than with BoN or GS.
+
 <p align="center">
     <img src="images/reward_cost-1.png" alt="Image4" width="600" />
 </p>
