@@ -1,0 +1,39 @@
+# path:
+save_img_path: "./results_sampling/"
+pretrained_model_path: "maxin-cn/Latte-1"
+
+# model config: 
+# maxin-cn/Latte-0: the first released version
+# maxin-cn/Latte-1: the second version with better performance (released on May. 23, 2024)
+model: LatteT2V
+video_length: 16
+image_size: [512, 512]
+# # beta schedule
+beta_start: 0.0001
+beta_end: 0.02
+beta_schedule: "linear"
+variance_type: "learned_range"
+
+# model speedup
+use_compile: False
+use_fp16: True
+
+# sample config:
+seed: 0
+run_time: 1
+guidance_scale: 7.5
+ddim_eta: 1.0
+sample_method: 'DLBS'
+num_sampling_steps: 50
+enable_temporal_attentions: True
+enable_vae_temporal_decoder: True # use temporal vae decoder from SVD, maybe reduce the video flicker (It's not widely tested)
+
+num_beams: 1
+num_candidates: 1
+num_lookahead_steps: 1
+weights_list: [0.0, 0.25, 0.25, 0.0, 1.0] # subject_consistency, motion_smoothness, dynamic_degree, aesthetic_quality, overall_consistency
+device_r: 'cuda'
+
+text_prompt: [
+    'Amidst a thunderstorm, a lightning bolt strikes a bicycle, setting it ablaze with crackling energy and lighting up the dark, rainy street.',
+]

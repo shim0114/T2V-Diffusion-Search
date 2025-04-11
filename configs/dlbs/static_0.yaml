@@ -28,13 +28,12 @@ num_sampling_steps: 50
 enable_temporal_attentions: True
 enable_vae_temporal_decoder: True # use temporal vae decoder from SVD, maybe reduce the video flicker (It's not widely tested)
 
-num_beams: 2
+num_beams: 4
 num_candidates: 2
-num_lookahead_steps: 6
-weights_list: [0.0, 0.25, 0.25, 0.0, 1.0] # subject_consistency, motion_smoothness, dynamic_degree, aesthetic_quality, overall_consistency
+num_lookahead_steps: 1
+weights_list: [0.0, 0.25, 0.0, 0.25, 0.75] # subject_consistency, motion_smoothness, dynamic_degree, aesthetic_quality, overall_consistency
 device_r: 'cuda'
 
 text_prompt: [
-    'Amidst a thunderstorm, a lightning bolt strikes a bicycle, setting it ablaze with crackling energy and lighting up the dark, rainy street.',
-    'Under a rainbow, a zebra kicks up a spray of water as it crosses a fast-flowing river.',
+    'a man holds up a stuffed bear.',
 ]

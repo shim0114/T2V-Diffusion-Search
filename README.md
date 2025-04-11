@@ -26,11 +26,15 @@ bash download_weight.sh
 ```
 
 ## Run Inference
+We provide two configuration files in the `configs/${method}` directory. 
+Below are examples of how to run inference with different settings:
 ```
-# DLBS
-python3 sample/sample_t2x.py --config configs/config_dlbs.yaml
-# DLBS-LA
-python3 sample/sample_t2x.py --config configs/config_dlbs_la.yaml
+# No DLBS 
+python3 sample/sample_t2x.py --config configs/kb1/static.yaml
+# DLBS 
+python3 sample/sample_t2x.py --config configs/dlbs/static.yaml
+# DLBS-LA 
+python3 sample/sample_t2x.py --config configs/dlbs_la/static.yaml
 ```
 
 ## Citation
