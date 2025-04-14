@@ -2,7 +2,6 @@
 
 ## Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search
 
-[![arXiv](https://img.shields.io/badge/arXiv-2501.19252-b31b1b.svg)](https://arxiv.org/abs/2501.19252)
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
@@ -52,18 +51,6 @@ python3 sample/sample_t2x.py --config configs/kb1/static.yaml
 python3 sample/sample_t2x.py --config configs/dlbs/static.yaml
 # DLBS-LA 
 python3 sample/sample_t2x.py --config configs/dlbs_la/static.yaml
-```
-
-## Citation
-
-```bibtex
-@article{oshima2025inference,
-  title     = {Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search},
-  author    = {Yuta Oshima and Masahiro Suzuki and Yutaka Matsuo and Hiroki Furuta},
-  journal   = {arXiv preprint arXiv:2501.19252},
-  year      = {2025},
-  url       = {https://arxiv.org/abs/2501.19252},
-}
 ```
 
 ## Acknowledgement
