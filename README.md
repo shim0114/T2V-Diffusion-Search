@@ -4,11 +4,7 @@
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
-<p align="center">
-    <img src="images/search_qualitative-1.png" alt="Image1" width="800" />
-</p>
-
-![説明テキスト](./images/figure1_animation_v2.gif)
+<img src="./images/figure1_animation_v2.gif" width="50%" alt="Figure 1">
 
 ## Latte
 ### Install Libraries
