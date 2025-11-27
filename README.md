@@ -12,11 +12,9 @@
 
 As done in recent LLMs, we consider scaling test-time compute in text-to-video generation. **Diffusion Latent Beam Search** efficiently and robustly maximizes alignment rewards during inference.
 
----
-
 <div align="center">
 
-<img src="./images/MainQualitative.png" width="100%" alt="Figure 1"> 
+<img src="./images/MainQualitative.png" width="95%" alt="Figure 1"> 
 
 </div>
 
