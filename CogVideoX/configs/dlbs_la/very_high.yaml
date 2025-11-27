@@ -10,7 +10,8 @@ guidance_scale: 6.0
 ddim_eta: 1.0
 num_sampling_steps: 50
 
-budget: 8
+num_beams: 4
+num_candidates: 2
 num_backtrack_steps: 1
 weights_list: [0.0, 0.25, 0.0, 0.5, 1.0] 
 # subject_consistency, motion_smoothness, dynamic_degree, aesthetic_quality, overall_consistency

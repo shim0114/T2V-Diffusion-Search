@@ -57,21 +57,21 @@ Below are examples of how to run inference with different settings:
 #### 5B models
 ```
 # No DLBS
-python3 CogVideoX/sample.py --config CogVideoX/configs/kb1/static.yaml
+python3 CogVideoX/sample.py --config CogVideoX/configs/kb1/very_high.yaml
 # DLBS 
-python3 CogVideoX/sample.py --config CogVideoX/configs/dlbs/static.yaml
+python3 CogVideoX/sample.py --config CogVideoX/configs/dlbs/very_high.yaml
 # DLBS-LA 
-python3 CogVideoX/sample.py --config CogVideoX/configs/dlbs_la/static.yaml
+python3 CogVideoX/sample.py --config CogVideoX/configs/dlbs_la/very_high.yaml
 ```
 
 #### 2B models
 ```
 # No DLBS
-python3 CogVideoX/sample_2b.py --config CogVideoX/configs/kb1/static.yaml
+python3 CogVideoX/sample_2b.py --config CogVideoX/configs/kb1/very_high.yaml
 # DLBS 
-python3 CogVideoX/sample_2b.py --config CogVideoX/configs/dlbs/static.yaml
+python3 CogVideoX/sample_2b.py --config CogVideoX/configs/dlbs/very_high.yaml
 # DLBS-LA 
-python3 CogVideoX/sample_2b.py --config CogVideoX/configs/dlbs_la/static.yaml
+python3 CogVideoX/sample_2b.py --config CogVideoX/configs/dlbs_la/very_high.yaml
 ```
 
 ## 💜 Setup & Inference with Wan 2.1

@@ -57,43 +57,41 @@ def main(args):
     if not os.path.exists(args.save_img_path):
             os.makedirs(args.save_img_path, exist_ok=True)
             
-    num_beams = 1 # B>=1
+    num_beams = args.num_beams
+    num_candidates = args.num_candidates
     
-    while num_beams <= args.budget: # K >=1 
-        num_candidates = (args.budget // num_beams) 
-        for num_prompt, prompt in enumerate(args.text_prompt):
-            print('Processing the ({}) prompt'.format(prompt))
-            
-            if not os.path.exists(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/'):
-                os.makedirs(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/', exist_ok=True)
+    for num_prompt, prompt in enumerate(args.text_prompt):
+        print('Processing the ({}) prompt'.format(prompt))
+        
+        if not os.path.exists(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/'):
+            os.makedirs(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/', exist_ok=True)
 
-            if os.path.exists(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt'):
-                raise ValueError(f'File {args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt already exists')
+        if os.path.exists(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt'):
+            raise ValueError(f'File {args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt already exists')
 
-            start = time.time()
+        start = time.time()
+        
+        video = pipe(
+            prompt=prompt,
+            num_videos_per_prompt=1,
+            num_inference_steps=args.num_sampling_steps,
+            num_frames=args.video_length, # Should be 8N + 1 where N <= 6 (default 49)
+            guidance_scale=args.guidance_scale,
+            eta=args.ddim_eta, 
+            generator=torch.Generator(device="cuda").manual_seed(args.seed),
+            num_beams=num_beams,
+            num_candidates=num_candidates,
+            num_backtrack_steps=args.num_backtrack_steps,
+            reward_model=compute_video_reward,
+            logging_file=f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt',
+        ).frames[0]
+        
+        end = time.time()
+        with open(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt', 'a') as f:
+            f.write(f'\nTime: {end-start}\n')
             
-            video = pipe(
-                prompt=prompt,
-                num_videos_per_prompt=1,
-                num_inference_steps=args.num_sampling_steps,
-                num_frames=args.video_length, # Should be 8N + 1 where N <= 6 (default 49)
-                guidance_scale=args.guidance_scale,
-                eta=args.ddim_eta, 
-                generator=torch.Generator(device="cuda").manual_seed(args.seed),
-                num_beams=num_beams,
-                num_candidates=num_candidates,
-                num_backtrack_steps=args.num_backtrack_steps,
-                reward_model=compute_video_reward,
-                logging_file=f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt',
-            ).frames[0]
+        export_to_video(video, f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}-0000.mp4', fps=8)
             
-            end = time.time()
-            with open(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt', 'a') as f:
-                f.write(f'\nTime: {end-start}\n')
-                
-            export_to_video(video, f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}-0000.mp4', fps=8)
-            
-        num_beams = num_beams * 2
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
