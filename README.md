@@ -1,9 +1,9 @@
 # Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search
 
+<div align="center">
+
 [![arXiv](https://img.shields.io/badge/arXiv-2501.19252-b31b1b.svg)](https://arxiv.org/abs/2501.19252)
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
-
-<div align="center">
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
 <img src="./images/figure1.png" width="48%" alt="Figure 1"> <img src="./images/normalized_reward_cost_fig1-1.png" width="42%" alt="Figure 1">
@@ -51,7 +51,7 @@ cp -r pretrained CogVideoX
 ```
 
 ### Run Inference
-We provide two configuration files in the `configs/${method}` directory. 
+We provide a configuration file in the `configs/${method}` directory. 
 Below are examples of how to run inference with different settings:
 
 #### 5B models
@@ -97,7 +97,7 @@ cd ../
 ```
 
 ### Run Inference
-We provide two configuration files in the `configs/${method}` directory. 
+We provide a prompts file in the `configs/movie_gen.yaml` directory. 
 Below are examples of how to run inference with different settings:
 
 #### 14B models
