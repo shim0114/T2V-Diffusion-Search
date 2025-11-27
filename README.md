@@ -1,9 +1,9 @@
-<div align="center">
-
 # Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search
 
 [![arXiv](https://img.shields.io/badge/arXiv-2501.19252-b31b1b.svg)](https://arxiv.org/abs/2501.19252)
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
+
+<div align="center">
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
 <img src="./images/figure1.png" width="48%" alt="Figure 1"> <img src="./images/normalized_reward_cost_fig1-1.png" width="42%" alt="Figure 1">
@@ -74,7 +74,7 @@ python3 CogVideoX/sample_2b.py --config CogVideoX/configs/dlbs/very_high.yaml
 python3 CogVideoX/sample_2b.py --config CogVideoX/configs/dlbs_la/very_high.yaml
 ```
 
-## 💜 Setup & Inference with Wan 2.1
+## 🌏 Setup & Inference with Wan 2.1
 
 ### Install Libraries
 ```
@@ -123,7 +123,6 @@ torchrun --nproc_per_node=4 my_generate.py --task t2v-1.3B --size 832*480 --ckpt
 # DLBS-LA 
 torchrun --nproc_per_node=4 my_generate.py --task t2v-1.3B --size 832*480 --ckpt_dir ./Wan2.1-T2V-1.3B --dit_fsdp --t5_fsdp --ulysses_size 4 --sample_solver 'dpm++' --sample_steps 50 --frame_num 33 --save_img_path "./results_sampling/wan/" --num_beams 4 --num_candidates 2 --num_backtrack_steps 6 --use_dlbs --config config/movie_gen.yaml
 ```
-
 
 ## 📚 Citation
 
