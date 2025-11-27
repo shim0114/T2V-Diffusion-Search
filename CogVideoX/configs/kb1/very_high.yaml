@@ -1,0 +1,20 @@
+# path:
+save_img_path: "./results_sampling/cogvideo/beam/devil_very_high/gemini_corr_weight/"
+
+video_length: 49
+
+# sample config:
+seed: 0
+run_time: 1
+guidance_scale: 6.0
+ddim_eta: 1.0
+num_sampling_steps: 50
+
+budget: 1
+num_backtrack_steps: 1
+weights_list: [0.0, 0.25, 0.0, 0.5, 1.0] 
+# subject_consistency, motion_smoothness, dynamic_degree, aesthetic_quality, overall_consistency
+
+text_prompt: [
+    'A giraffe navigating a city during a robot uprising, with quick cuts showing chaotic battles, explosions, and futuristic technology in a high-stakes escape scenario.',
+]
