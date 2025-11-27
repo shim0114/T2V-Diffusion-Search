@@ -4,7 +4,7 @@
 [![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
-<img src="./images/figure1_animation_v2.gif" width="50%" alt="Figure 1">
+<img src="./images/figure1_animation_v2.gif" width="60%" alt="Figure 1">
 
 ## Latte
 ### Install Libraries
