@@ -205,20 +205,25 @@ def _parse_args():
         action="store_true",
         help="Use DLBS if this flag is set.")
     parser.add_argument(
-        "--budget",
+        "--num_beams",
         type=int,
         default=1,
-        help="Budget of DLBS.")
+        help="Number of beams for DLBS.")
+    parser.add_argument(
+        "--num_candidates",
+        type=int,
+        default=1,
+        help="Number of candidates for DLBS.")
     parser.add_argument(
         "--num_backtrack_steps",
         type=int,
         default=1,
-        help="Budget of DLBS.")
+        help="Number of backtrack steps for DLBS.")
     parser.add_argument(
         "--save_img_path",
         type=str,
         default="./results_sampling/wan/",
-        help="Budget of DLBS.")
+        help="Path to save images for DLBS.")
 
     args = parser.parse_args()
 
@@ -386,74 +391,70 @@ def generate(args):
             os.makedirs(args.save_img_path, exist_ok=True) 
         
         if args.use_dlbs:
-            num_beams = 1 # B>=1
+            num_beams = args.num_beams
+            num_candidates = args.num_candidates
             
-            while num_beams <= args.budget: # K >=1 
-                num_candidates = (args.budget // num_beams)
-            
-                for prompt in prompt_list:
-                    if rank == 0:
-                        print('Processing the ({}) prompt'.format(prompt))
-                    
-                        if not os.path.exists(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/'):
-                            os.makedirs(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/', exist_ok=True)
-
-                        if os.path.exists(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt'):
-                            raise ValueError(f'File {args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt already exists')
+            for prompt in prompt_list:
+                if rank == 0:
+                    print('Processing the ({}) prompt'.format(prompt))
                 
-                    start = time.time()
-                    
-                    video = wan_t2v.generate(
-                        prompt,
-                        size=SIZE_CONFIGS[args.size],
-                        frame_num=args.frame_num,
-                        shift=args.sample_shift,
-                        sample_solver=args.sample_solver,
-                        sampling_steps=args.sample_steps,
-                        guide_scale=args.sample_guide_scale,
-                        seed=args.base_seed,
-                        offload_model=args.offload_model,
-                        num_beams=num_beams,
-                        num_candidates=num_candidates,
-                        num_backtrack_steps=args.num_backtrack_steps,
-                        reward_model=compute_video_reward,
-                        logging_file=f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt',)
-                    
-                    end = time.time()
-                    if rank == 0:
-                        with open(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt', 'a') as f:
-                            f.write(f'\nTime: {end-start}\n')
+                    if not os.path.exists(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/'):
+                        os.makedirs(args.save_img_path + f'/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/', exist_ok=True)
 
-                    if rank == 0:
-                        # if args.save_file is None:
-                        #     formatted_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-                        #     formatted_prompt = args.prompt.replace(" ", "_").replace("/",
-                        #                                                             "_")[:50]
-                        #     suffix = '.png' if "t2i" in args.task else '.mp4'
-                        #     args.save_file = f"{args.task}_{args.size.replace('*','x') if sys.platform=='win32' else args.size}_{args.ulysses_size}_{args.ring_size}_{formatted_prompt}_{formatted_time}" + suffix
-                        save_file = f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}-0000.mp4'
+                    if os.path.exists(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt'):
+                        raise ValueError(f'File {args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt already exists')
+            
+                start = time.time()
+                
+                video = wan_t2v.generate(
+                    prompt,
+                    size=SIZE_CONFIGS[args.size],
+                    frame_num=args.frame_num,
+                    shift=args.sample_shift,
+                    sample_solver=args.sample_solver,
+                    sampling_steps=args.sample_steps,
+                    guide_scale=args.sample_guide_scale,
+                    seed=args.base_seed,
+                    offload_model=args.offload_model,
+                    num_beams=num_beams,
+                    num_candidates=num_candidates,
+                    num_backtrack_steps=args.num_backtrack_steps,
+                    reward_model=compute_video_reward,
+                    logging_file=f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt',)
+                
+                end = time.time()
+                if rank == 0:
+                    with open(f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}_log.txt', 'a') as f:
+                        f.write(f'\nTime: {end-start}\n')
 
-                        if "t2i" in args.task:
-                            raise NotImplementedError
-                            # logging.info(f"Saving generated image to {args.save_file}")
-                            # cache_image(
-                            #     tensor=video.squeeze(1)[None],
-                            #     save_file=args.save_file,
-                            #     nrow=1,
-                            #     normalize=True,
-                            #     value_range=(-1, 1))
-                        else:
-                            logging.info(f"Saving generated video to {save_file}")
-                            cache_video(
-                                tensor=video[None],
-                                save_file=save_file,
-                                fps=cfg.sample_fps,
-                                nrow=1,
-                                normalize=True,
-                                value_range=(-1, 1))
-                    # logging.info("Finished.")
-                    
-                num_beams = num_beams * 2
+                if rank == 0:
+                    # if args.save_file is None:
+                    #     formatted_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    #     formatted_prompt = args.prompt.replace(" ", "_").replace("/",
+                    #                                                             "_")[:50]
+                    #     suffix = '.png' if "t2i" in args.task else '.mp4'
+                    #     args.save_file = f"{args.task}_{args.size.replace('*','x') if sys.platform=='win32' else args.size}_{args.ulysses_size}_{args.ring_size}_{formatted_prompt}_{formatted_time}" + suffix
+                    save_file = f'{args.save_img_path}/LA={args.num_backtrack_steps}_K={num_candidates}_B={num_beams}/{prompt}-0000.mp4'
+
+                    if "t2i" in args.task:
+                        raise NotImplementedError
+                        # logging.info(f"Saving generated image to {args.save_file}")
+                        # cache_image(
+                        #     tensor=video.squeeze(1)[None],
+                        #     save_file=args.save_file,
+                        #     nrow=1,
+                        #     normalize=True,
+                        #     value_range=(-1, 1))
+                    else:
+                        logging.info(f"Saving generated video to {save_file}")
+                        cache_video(
+                            tensor=video[None],
+                            save_file=save_file,
+                            fps=cfg.sample_fps,
+                            nrow=1,
+                            normalize=True,
+                            value_range=(-1, 1))
+                # logging.info("Finished.")
             
         else:
             for run_idx in range(args.num_runs):

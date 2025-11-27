@@ -75,7 +75,54 @@ python3 CogVideoX/sample_2b.py --config CogVideoX/configs/dlbs_la/very_high.yaml
 ```
 
 ## 💜 Setup & Inference with Wan 2.1
-Comming soon...
+
+### Install Libraries
+```
+pip install torch==2.4.0
+cd Wan2.1
+pip install -r requirements.txt
+cd ../
+```
+
+### Download Weights
+```
+bash download_weight.sh
+cp -r pretrained Wan2.1
+
+pip install modelscope
+cd Wan2.1
+modelscope download Wan-AI/Wan2.1-T2V-14B --local_dir ./Wan2.1-T2V-14B
+modelscope download Wan-AI/Wan2.1-T2V-1.3B --local_dir ./Wan2.1-T2V-1.3B
+cd ../
+```
+
+### Run Inference
+We provide two configuration files in the `configs/${method}` directory. 
+Below are examples of how to run inference with different settings:
+
+#### 14B models
+```
+cd Wan2.1
+
+# No DLBS
+torchrun --nproc_per_node=8 my_generate.py --task t2v-14B --size 832*480 --ckpt_dir ./Wan2.1-T2V-14B --dit_fsdp --t5_fsdp --ulysses_size 8 --sample_solver 'dpm++' --sample_steps 50 --frame_num 33 --save_img_path "./results_sampling/wan/" --num_beams 1 --num_candidates 1 --config config/movie_gen.yaml
+# DLBS 
+torchrun --nproc_per_node=8 my_generate.py --task t2v-14B --size 832*480 --ckpt_dir ./Wan2.1-T2V-14B --dit_fsdp --t5_fsdp --ulysses_size 8 --sample_solver 'dpm++' --sample_steps 50 --frame_num 33 --save_img_path "./results_sampling/wan/" --num_beams 4 --num_candidates 2 --use_dlbs --config config/movie_gen.yaml
+# DLBS-LA 
+torchrun --nproc_per_node=8 my_generate.py --task t2v-14B --size 832*480 --ckpt_dir ./Wan2.1-T2V-14B --dit_fsdp --t5_fsdp --ulysses_size 8 --sample_solver 'dpm++' --sample_steps 50 --frame_num 33 --save_img_path "./results_sampling/wan/" --num_beams 4 --num_candidates 2 --num_backtrack_steps 6 --use_dlbs --config config/movie_gen.yaml
+```
+
+#### 1.3B models
+```
+cd Wan2.1
+
+# No DLBS
+torchrun --nproc_per_node=4 my_generate.py --task t2v-1.3B --size 832*480 --ckpt_dir ./Wan2.1-T2V-1.3B --dit_fsdp --t5_fsdp --ulysses_size 4 --sample_solver 'dpm++' --sample_steps 50 --frame_num 33 --save_img_path "./results_sampling/wan/" --num_beams 1 --num_candidates 1 --config config/movie_gen.yaml
+# DLBS 
+torchrun --nproc_per_node=4 my_generate.py --task t2v-1.3B --size 832*480 --ckpt_dir ./Wan2.1-T2V-1.3B --dit_fsdp --t5_fsdp --ulysses_size 4 --sample_solver 'dpm++' --sample_steps 50 --frame_num 33 --save_img_path "./results_sampling/wan/" --num_beams 4 --num_candidates 2 --use_dlbs --config config/movie_gen.yaml
+# DLBS-LA 
+torchrun --nproc_per_node=4 my_generate.py --task t2v-1.3B --size 832*480 --ckpt_dir ./Wan2.1-T2V-1.3B --dit_fsdp --t5_fsdp --ulysses_size 4 --sample_solver 'dpm++' --sample_steps 50 --frame_num 33 --save_img_path "./results_sampling/wan/" --num_beams 4 --num_candidates 2 --num_backtrack_steps 6 --use_dlbs --config config/movie_gen.yaml
+```
 
 
 ## 📚 Citation

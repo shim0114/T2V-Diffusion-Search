@@ -18,9 +18,9 @@ def dd_mapping_func(a):
     
 class VideoRewardCalculator:
     """
-    各種モデルおよび重みを初期化し、
-    compute_reward() で video_tensor と prompt を入力すると
-    総合的なリワードスコアを返すクラス。
+    This class initializes models and weights, 
+    and calculates an overall reward score 
+    based on the input video_tensor and prompt using compute_reward()
     """
 
     def __init__(
@@ -36,17 +36,17 @@ class VideoRewardCalculator:
         Parameters
         ----------
         device : str
-            PyTorch の実行デバイス
+            PyTorch device to run the models on
         w_subject_consistency : float
-            subject_consistency スコアの重み
+            subject_consistency score weight
         w_motion_smoothness : float
-            motion_smoothness スコアの重み
+            motion_smoothness score weight
         w_dynamic_degree : float
-            dynamic_degree スコアの重み
+            dynamic_degree score weight
         w_aesthetic : float
-            aesthetic スコアの重み
+            aesthetic score weight
         w_overall_consistency : float
-            overall_consistency スコアの重み
+            overall_consistency score weight
         """
 
         self.device = device
@@ -56,7 +56,7 @@ class VideoRewardCalculator:
         self.w_aesthetic = w_aesthetic
         self.w_overall_consistency = w_overall_consistency
 
-        # ------- モデルの初期化 --------
+        # ------- Model Initialization --------
         # aesthetic
         self.clip_model, self.preprocess = clip.load('ViT-L/14', device=self.device)
         self.aesthetic_model = get_aesthetic_model('pretrained/aesthetic_model/emb_reader').to(self.device)
@@ -90,26 +90,26 @@ class VideoRewardCalculator:
     @torch.no_grad()
     def __call__(self, video_tensor, prompt, image_reward=False):
         """
-        指定した video_tensor と prompt から、各種スコアを計算して
-        重み付き和によるリワード値、および各スコアの詳細を返す。
+        Calculates various scores from the specified video_tensor and prompt,
+        returning a reward value based on a weighted sum, along with details of each score.
 
         Parameters
         ----------
         video_tensor : torch.Tensor
-            動画データのテンソル (B, T, C, H, W) などの形状想定
+            Video data tensor (expected shape such as (B, T, C, H, W)).
         prompt : str
-            overall_consistency に入力するプロンプト
+            Prompt input for overall_consistency.
 
         Returns
         -------
         reward : float
-            5つのスコアを重みに応じて線形和したリワード
+            Reward calculated as a weighted linear sum of the 5 scores.
         score_details : dict
-            各スコアの詳細をまとめた辞書
+            Dictionary summarizing the details of each score.
         """
         video_tensor = video_tensor.to(self.device)
 
-        # ---- 各スコアを計算 ----
+        # ---- Calculate each score ----
         aesthetic_score = laion_aesthetic(
             self.aesthetic_model, self.clip_model, video_tensor, self.device
         ) 
@@ -132,7 +132,7 @@ class VideoRewardCalculator:
             self.motion, video_tensor
         ) if not image_reward else 0.0
 
-        # ---- 線形和を計算 ----
+        # ---- Calculate weighted sum ----
         reward = (
             self.w_aesthetic           * aesthetic_score +
             self.w_subject_consistency * subject_consistency_score +

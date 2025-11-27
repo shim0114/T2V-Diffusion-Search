@@ -121,7 +121,7 @@ class WanT2V:
         seed_g = torch.Generator(device=self.device)
         seed_g.manual_seed(seed)
 
-        # --- テキストエンコーダ ---
+        # --- Text Encoder ---
         if not self.t5_cpu:
             self.text_encoder.model.to(self.device)
             context = self.text_encoder([input_prompt], self.device)
@@ -192,7 +192,7 @@ class WanT2V:
 
             for i, t in enumerate(tqdm(timesteps)):
 
-                # --- rank0のみログ書き込み ---
+                # --- Logging only on rank0 ---
                 if self.rank == 0:
                     with open(logging_file, 'a') as f:
                         f.write(f'timestep: {t}\n')
@@ -220,7 +220,7 @@ class WanT2V:
                         num_candidates=num_candidates
                     )
 
-                    # --- 各候補に対して生成 ---
+                    # --- Generate for each candidate ---
                     for k_idx in range(num_candidates):
 
                         if t != timesteps[-1]:
@@ -252,7 +252,7 @@ class WanT2V:
                                 self.model.cpu()
                                 torch.cuda.empty_cache()
 
-                            # ====== 修正点: rank0 だけがReward計算 & ログを取る ======
+                            # ====== Modification: Only rank0 calculates Reward & logs ======
                             if self.rank == 0:
                                 videos = self.vae.decode(x0)
                                 new_score, score_details = reward_model(
@@ -266,15 +266,15 @@ class WanT2V:
                                     input_prompt
                                 )
 
-                                # ログ書き込みもrank0のみ
+                                # Logging only on rank0
                                 with open(logging_file, 'a') as f:
                                     f.write(f'score_details: {score_details}\n')
                             else:
-                                # rank0以外はダミー値を使う（後で同期するならBroadcastも可）
+                                # Use dummy value on non-rank0 (can also use Broadcast for synchronization later)
                                 new_score = 0.0
 
-                            # --- 全ランクで同じスコア数を持つようにする ---
-                            # ここでは「rank0で計算したnew_score」を他ランクにbroadcastする例
+                            # --- Ensure all ranks have the same number of scores ---
+                            # Here, we broadcast the "new_score calculated on rank0" to other ranks
                             new_score_t = torch.tensor([new_score], dtype=torch.float32, device=self.device)
                             if dist.is_initialized():
                                 dist.broadcast(new_score_t, src=0)
@@ -286,7 +286,7 @@ class WanT2V:
                             )
 
                         else:
-                            # 最終t の場合
+                            # Final timestep, no backtracking
                             latent_model_input_bt = [candidate_prev_latents[k_idx].squeeze(0).clone()]
                             x0 = latent_model_input_bt
 
@@ -294,7 +294,7 @@ class WanT2V:
                                 self.model.cpu()
                                 torch.cuda.empty_cache()
 
-                            # ====== 修正点: rank0 だけがReward計算 & ログ ======
+                            # ====== Modification: Only rank0 calculates Reward & logs ======
                             if self.rank == 0:
                                 videos = self.vae.decode(x0)
                                 new_score, score_details = reward_model(
@@ -312,7 +312,7 @@ class WanT2V:
                             else:
                                 new_score = 0.0
 
-                            # --- 同じくbroadcastして同期 ---
+                            # --- Similarly, broadcast for synchronization ---
                             new_score_t = torch.tensor([new_score], dtype=torch.float32, device=self.device)
                             if dist.is_initialized():
                                 dist.broadcast(new_score_t, src=0)
@@ -328,27 +328,27 @@ class WanT2V:
                 # parent_dir = Path(logging_file).parent
                 # torch.save(videos[0], f'{parent_dir}/inter_{i}.pth')
 
-                # ここでビーム絞り込み
+                # Beam pruning here
                 candidates_latents = next_candidates_latents
                 candidates_scores = next_candidates_scores
 
                 if t != timesteps[-1]:
-                    # スコアが高い順にソート
+                    # Sort by score in descending order
                     sorted_indices = sorted(
                         range(len(candidates_scores)),
                         key=lambda i: candidates_scores[i],
                         reverse=True
                     )
-                    # rank0だけログ書き込み
+                    # Logging only on rank0
                     if self.rank == 0:
                         with open(logging_file, 'a') as f:
                             f.write(f'sorted_indices: {sorted_indices}\n\n')
 
-                    # トップのビームだけ残す
+                    # Keep only the top beams
                     candidates_latents = [candidates_latents[i] for i in sorted_indices[:num_beams]]
                     candidates_scores = [candidates_scores[i] for i in sorted_indices[:num_beams]]
                 else:
-                    # 最終ステップ
+                    # Final timestep, no backtracking
                     sorted_indices = sorted(
                         range(len(candidates_scores)),
                         key=lambda i: candidates_scores[i],
@@ -362,7 +362,7 @@ class WanT2V:
                 if t != timesteps[-1]:
                     sample_scheduler.do_step_index()
 
-            # 最終結果をデコード
+            # Final result decoding
             latents = best_latents
             x0 = latents
             if offload_model:
@@ -371,7 +371,7 @@ class WanT2V:
             if self.rank == 0:
                 videos = self.vae.decode(x0)
 
-        # 後処理
+        # Post-processing
         del noise, latents
         del sample_scheduler
         if offload_model:

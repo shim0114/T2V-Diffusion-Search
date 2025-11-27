@@ -1,5 +1,5 @@
 # path:
-save_img_path: "./results_sampling/cogvideo/beam/devil_very_high/gemini_corr_weight/"
+save_img_path: "./results_sampling/cogvideo/"
 
 video_length: 49
 
