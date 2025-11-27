@@ -1,0 +1,41 @@
+# path:
+save_img_path: "./results_sampling/cogvideo/beam/devil_high/gemini_corr_weight/"
+
+video_length: 17
+
+# sample config:
+seed: 0
+run_time: 1
+guidance_scale: 6.0
+ddim_eta: 1.0
+num_sampling_steps: 50
+
+budget: 8
+num_backtrack_steps: 6
+weights_list: [0.0, 0.25, 0.25, 0.0, 1.0] 
+# subject_consistency, motion_smoothness, dynamic_degree, aesthetic_quality, overall_consistency
+
+text_prompt: [
+    # 'A bookshelf collapses loudly, books flying everywhere, creating chaos in the once quiet room.',
+    # 'Swift scenes of a sandstorm engulfing a desert oasis, with dunes shifting and palm trees bending in the relentless wind.',
+    # 'A chaotic scene of cowboys rounding up cattle during a stampede.',
+    # 'Suddenly, a storm hits the city, rain pouring down like a torrent, making rivers on the streets.',
+    # 'WWI biplanes in a dogfight with canvas wings ripping, dramatic cloud backdrop, ultra-detailed.',
+    # 'In the mountains, a bear erupts from the snow, creating a large cloud of powder.',
+    # 'Amidst a thunderstorm, a lightning bolt strikes a bicycle, setting it ablaze with crackling energy and lighting up the dark, rainy street.',
+    # 'A single eagle dives extremely fast, snatching a fish from the water.',
+    # 'A boat hits a big wave and flips, landing upside down.',
+    # 'A car drives through a wall of fire in a daring escape.',
+    # 'The cat tore across the living room, jumping over toys and furniture to catch the mouse.',
+    # 'A cow jumps over a fence, landing in a pond with a big splash.',
+    # 'Two dogs chase each other, suddenly skidding around a sharp corner.',
+    # 'A storm sweeps an elephant into a raging river, carrying it away swiftly.',
+    # 'Racing the sunset, a giraffe charges across the horizon, shadows stretching long.',
+    # 'Against the wind, a lone horse gallops, mane streaming behind.',
+    # 'Jumping over a gorge, the motorcycle lands just in time on the other side.',
+    # 'A thief sprints away from the scene, with the police in hot pursuit.',
+    # 'The ice cracks beneath their feet, making the sheep skid and slide, rushing to solid ground.',
+    # 'Lightning strikes as a train blasts its horn, cutting through a stormy night.',
+    'A truck speeds across the desert, dust clouds swirling behind it.',
+    # 'Under a rainbow, a zebra kicks up a spray of water as it crosses a fast-flowing river.',
+]

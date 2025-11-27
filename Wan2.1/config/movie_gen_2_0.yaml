@@ -1,0 +1,24 @@
+weights_list: [0.0, 0.0, 0.0, 0.25, 1.0]
+
+prompt_list: [
+    'A green monster made of plants walks through an airport.',
+    'A marble goes through a glass cup, breaking it into pieces.',
+    'A droplet of water falling onto a hot surface, instantly evaporating into a wisp of steam that swirls gracefully into the air.',
+    'an old man wearing a green dress and a sun hat taking a pleasant stroll in Johannesburg South Africa during a beautiful sunset',
+    'A person on a hoverboard colliding with a wall, the board stopping abruptly.',
+    'a toy robot wearing blue jeans and a white t shirt taking a pleasant stroll in Johannesburg South Africa during a winter storm',
+    'In a marathon race, a female athlete gradually sprints ahead of the male athletes.',
+    'A teenager eating a slice of pizza, cheese stretching as they pull it away.',
+    'A man in a suit fights monsters ',
+    'A dog made of ice melts completely in a hot summer day',
+    # 'A truck right alongside a flowing river, capturing the movement of the water and the surrounding forest.',
+    # 'A group of skateboarders perform tricks on ramps and rails at a skate park, showcasing their skills.',
+    # 'A hot air balloon descending back to the ground.',
+    # 'Chef chopping onions in the kitchen for the preparation of the dish',
+    # 'Zoom in shot to the face of a young woman sitting on a bench in the middle of an empty school gym.',
+    # 'The couple runs hand in hand to release a sky lantern, then watches it drift upward into the night sky, carried by the wind with the stars shining above.',
+    # 'Aerial view shot of a cloaked figure elevating in the sky between skyscrapers.',
+    # 'A softball player sliding safely into second base.',
+    # 'A giraffe in a lifeguard outfit, sitting atop a high chair and watching over a crowded pool.',
+    # 'A speed skater accelerating during a short track race.',
+    ]

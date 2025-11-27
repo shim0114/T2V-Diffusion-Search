@@ -8,7 +8,9 @@
     <img src="images/search_qualitative-1.png" alt="Image1" width="800" />
 </p>
 
-## Installation
+![説明テキスト](./images/figure1_animation_v2.gif)
+
+## Latte
 ### Install Libraries
 Please use `./Dockerfile` to build docker image or install python libraries specified in this dockerfile.
 
@@ -28,6 +30,34 @@ python3 sample/sample_t2x.py --config configs/dlbs/static.yaml
 # DLBS-LA 
 python3 sample/sample_t2x.py --config configs/dlbs_la/static.yaml
 ```
+
+## CogVideoX
+
+### Install Libraries
+```
+cd CogVideoX/
+pip3 install -r requirements.txt
+cd ../
+```
+
+### Download Weights
+```
+bash download_weight.sh
+cp -r pretrained CogVideoX
+```
+
+## Run Inference
+We provide two configuration files in the `configs/${method}` directory. 
+Below are examples of how to run inference with different settings:
+```
+# No DLBS 
+python3 sample/sample_t2x.py --config configs/kb1/static.yaml
+# DLBS 
+python3 sample/sample_t2x.py --config configs/dlbs/static.yaml
+# DLBS-LA 
+python3 sample/sample_t2x.py --config configs/dlbs_la/static.yaml
+```
+
 
 ## Citation
 

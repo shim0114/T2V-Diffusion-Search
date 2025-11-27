@@ -1,0 +1,41 @@
+# path:
+save_img_path: "./results_sampling/cogvideo/beam/devil_very_high/gemini_corr_weight/"
+
+video_length: 49
+
+# sample config:
+seed: 0
+run_time: 1
+guidance_scale: 6.0
+ddim_eta: 1.0
+num_sampling_steps: 50
+
+budget: 4
+num_backtrack_steps: 6
+weights_list: [0.0, 0.25, 0.0, 0.5, 1.0] 
+# subject_consistency, motion_smoothness, dynamic_degree, aesthetic_quality, overall_consistency
+
+text_prompt: [
+    # 'Classical style of a horse partaking in an ancient chariot race, scenes switching quickly from cheering crowds to close-ups of intense wheel clashes.',
+    # 'High-speed shots of a volcanic eruption engulfing a tropical island, with lava fountains spewing molten rock and the environment transforming from idyllic paradise to hellish landscape of ash and fire.',
+    # 'A thrilling scene of rural mountain biking extreme sports, starting from the early morning cycling adventure, transitioning to the intense chase through fields and forests, and ending with cheers and celebrations under the sunset.',
+    'Neon-lit streets pulse with energy as vehicles engage in a high-octane pursuit, transitioning seamlessly from chaos to calculated evasion. Against the backdrop of a setting sun, the chase intensifies, each turn a heartbeat away from capture.',
+    'A fighter jet dodging rapid anti-air gunfire, quick maneuvers, tracer rounds visible.',
+    'Bear escaping a collapsing cave, rocks tumbling, dust rising, ((masterpiece)), ((best quality)), 8k, high detailed, ultra-detailed, bear, ((dark rocky textures)), sprinting, (echoing rumble), sudden movement',
+    # 'A courier on a bike weaves through traffic at breakneck speed, narrowly avoiding cars and pedestrians in a rush to make deliveries on time.',
+    # 'A hummingbird rapidly darting between vibrant flowers in a lush garden, with quick cuts to various close-up shots showcasing its rapid wing movement and agility.',
+    # 'Venetian gondola chase scene, narrow canals, historic buildings, urgent escape, ((masterpiece)), ((best quality)), 8k, high detailed, ultra-detailed, gondola, ((twisting canals)), (ancient architecture), (urgent paddling), cinematic chase.',
+    # 'futuristic sports cars racing on a vertical loop track against a sci-fi cityscape, cars defying gravity, ((speed trails)), (dizzying heights), (spectacular crashes), the thrill of cutting-edge technology.',
+    # 'Cat rapidly zigzagging across a rooftop, avoiding swooping birds under a stormy sky.',
+    # 'A sequence of a cow performing acrobatic stunts over a series of colorful, abstract platforms that morph shapes.',
+    # 'The dog bursts through a thicket, darting from a foggy forest to a steep hillside, rocks crumbling under its paws as it charges towards a roaring river below.',
+    # 'Thundering across a vast desert plain, the elephants race over dunes and dodge sandstorms, before swiftly traversing through a rocky canyon, bounding over boulders and leaping across narrow ravines.',
+    # 'A giraffe navigating a city during a robot uprising, with quick cuts showing chaotic battles, explosions, and futuristic technology in a high-stakes escape scenario.',
+    # 'a horse leading a wild stampede across a stormy beach with waves crashing, depicted with swift, sweeping camera moves, cinematic composition.',
+    # 'Intense motorcycle escape from a volcanic eruption, with transitions from lava-filled landscapes to ash-clouded skies.',
+    # 'A futuristic robot uprising, ((lasers firing)), metallic drones, explosions, debris, ((screaming civilians)), dystopian cityscape.',
+    # 'Sheeps engaging in a high-speed pursuit through a cyberpunk city, the scene rapidly transitioning between neon-lit streets, bustling marketplaces, and towering skyscrapers.',
+    # 'A pulse-pounding sequence of a train barreling through a treacherous storm, the scene transitioning between lightning-lit skies and torrents of rain to flooded tracks and collapsing bridges.',
+    # 'A truck rushing away from a treacherous mountain pass during a blizzard, with sudden avalanches and rockslides adding to the danger.',
+    # 'A zebra sprinting across the busy lanes of Times Square in New York City, with scene transitions occurring quickly as it moves from iconic billboards to bustling sidewalks filled with tourists.',
+]

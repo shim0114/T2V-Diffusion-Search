@@ -173,5 +173,12 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+# Latte
 pretrained/*
 results_sampling/*
+
+# CogVideoX
+CogVideoX/pretrained/*
+
+# Wan2.1
+Wan2.1/*
