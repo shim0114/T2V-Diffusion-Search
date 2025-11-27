@@ -35,7 +35,7 @@ python3 sample/sample_t2x.py --config configs/dlbs/static.yaml
 python3 sample/sample_t2x.py --config configs/dlbs_la/static.yaml
 ```
 
-## 🦋　Setup & Inference with CogVideoX
+## 🦋 Setup & Inference with CogVideoX
 
 ### Install Libraries
 ```
