@@ -3,7 +3,7 @@
 <div align="center">
 
 [![arXiv](https://img.shields.io/badge/arXiv-2501.19252-b31b1b.svg)](https://arxiv.org/abs/2501.19252)
-[![Google Site](https://img.shields.io/badge/website-site-blue)](https://sites.google.com/view/t2v-dlbs)
+[![Google Site](https://img.shields.io/badge/Project-Website-blue)](https://sites.google.com/view/t2v-dlbs)
 
 <!-- <img src="images/Presentation4.gif" width="400"> -->
 <img src="./images/figure1.png" width="48%" alt="Figure 1"> <img src="./images/normalized_reward_cost_fig1-1.png" width="42%" alt="Figure 1">
@@ -12,7 +12,14 @@
 
 As done in recent LLMs, we consider scaling test-time compute in text-to-video generation. **Diffusion Latent Beam Search** efficiently and robustly maximizes alignment rewards during inference.
 
-We provide implementations for several state-of-the-art models, including **Latte**, **CogVideoX**, and **Wan 2.1** (comming soon).
+<div align="center">
+
+<img src="./images/MainQualitative.png" width="100%" alt="Figure 1"> 
+
+</div>
+
+We provide implementations for several state-of-the-art models, including **Latte**, **CogVideoX**, and **Wan 2.1**.
+Animated results are shown in [project website](https://img.shields.io/badge/website-site-blue).
 
 ## 🚀 Getting Started with Latte
 ### Install Libraries
