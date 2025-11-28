@@ -18,7 +18,7 @@ As done in recent LLMs, we consider scaling test-time compute in text-to-video g
 
 </div>
 
-We provide implementations for several state-of-the-art models, including **Latte**, **CogVideoX**, and **Wan 2.1**. Animated results are shown in [project website](https://img.shields.io/badge/website-site-blue).
+We provide implementations for several state-of-the-art models, including **Latte**, **CogVideoX**, and **Wan 2.1**. Animated results are shown in [project website](https://sites.google.com/view/t2v-dlbs).
 
 ## 🚀 Getting Started with Latte
 ### Install Libraries
