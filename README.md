@@ -1,4 +1,4 @@
-# Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search 
+<h1 align="center">Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search</h1>
 
 <p align="center">
     <b>NeurIPS 2025</b>
