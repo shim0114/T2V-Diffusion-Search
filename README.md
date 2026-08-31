@@ -11,6 +11,7 @@
 
 </div>
 
+## 🎬 Overview
 As done in recent LLMs, we consider **scaling test-time compute** in text-to-video generation.
 **Diffusion Latent Beam Search** (**DLBS**) is an **inference-time scaling** (**test-time scaling**) method for text-to-video diffusion models.
 
