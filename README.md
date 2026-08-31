@@ -9,13 +9,19 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2501.19252-b31b1b.svg)](https://arxiv.org/abs/2501.19252)
 [![Google Site](https://img.shields.io/badge/Project-Website-blue)](https://sites.google.com/view/t2v-dlbs)
 
+</div>
+
+As done in recent LLMs, we consider **scaling test-time compute** in text-to-video generation.
+**Diffusion Latent Beam Search** (**DLBS**) is a **test-time scaling** (**inference-time scaling**) method for text-to-video diffusion models.
+
+<div align="center">
+
 <!-- <img src="images/Presentation4.gif" width="400"> -->
 <img src="./images/figure1.png" width="48%" alt="Figure 1"> <img src="./images/normalized_reward_cost_fig1-1.png" width="42%" alt="Figure 1">
 
 </div>
 
-As done in recent LLMs, we consider **scaling test-time compute** in text-to-video generation.
-**Diffusion Latent Beam Search** (**DLBS**) is a **test-time scaling** (**inference-time scaling**) method for text-to-video diffusion models.
+Instead of generating multiple complete videos and selecting the best one as in Best-of-N sampling, DLBS performs **reward-guided beam search over intermediate diffusion latents and denoising trajectories**. DLBS-LA further introduces a **lookahead estimator** to make intermediate reward evaluation more reliable during diffusion sampling.
 
 <div align="center">
 
