@@ -14,7 +14,9 @@
 
 </div>
 
-As done in recent LLMs, we consider scaling test-time compute in text-to-video generation. **Diffusion Latent Beam Search** efficiently and robustly maximizes alignment rewards during inference, demonstrating clear **inference-time scaling**.
+**Diffusion Latent Beam Search** (DLBS) is a **training-free test-time scaling** (**inference-time scaling**) method for text-to-video diffusion models.
+
+Instead of generating multiple complete videos and selecting the best one as in Best-of-N sampling, DLBS performs **reward-guided beam search over intermediate diffusion latents and denoising trajectories**. DLBS-LA further introduces a **lookahead estimator** to make intermediate reward evaluation more reliable during diffusion sampling.
 
 <div align="center">
 
