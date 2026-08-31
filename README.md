@@ -18,6 +18,8 @@
 
 Instead of generating multiple complete videos and selecting the best one as in Best-of-N sampling, DLBS performs **reward-guided beam search over intermediate diffusion latents and denoising trajectories**. DLBS-LA further introduces a **lookahead estimator** to make intermediate reward evaluation more reliable during diffusion sampling.
 
+A key finding of our study is that, under an inference-time compute budget, allocating additional computation to **trajectory search** and **lookahead reward estimation** can be more effective than simply increasing the number of denoising steps.
+
 <div align="center">
 
 <img src="./images/MainQualitative.png" width="95%" alt="Figure 1"> 
