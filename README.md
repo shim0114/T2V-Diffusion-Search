@@ -145,12 +145,13 @@ torchrun --nproc_per_node=4 my_generate.py --task t2v-1.3B --size 832*480 --ckpt
 ## 📚 Citation
 
 ```bibtex
-@article{oshima2025inference,
-  title     = {Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search},
-  author    = {Yuta Oshima and Masahiro Suzuki and Yutaka Matsuo and Hiroki Furuta},
-  journal   = {arXiv preprint arXiv:2501.19252},
-  year      = {2025},
-  url       = {https://arxiv.org/abs/2501.19252},
+@inproceedings{
+    oshima2025inferencetime,
+    title={Inference-Time Text-to-Video Alignment with Diffusion Latent Beam Search},
+    author={Yuta Oshima and Masahiro Suzuki and Yutaka Matsuo and Hiroki Furuta},
+    booktitle={The Thirty-ninth Annual Conference on Neural Information Processing Systems},
+    year={2025},
+    url={https://openreview.net/forum?id=c9EAmyYPOv}
 }
 ```
 
